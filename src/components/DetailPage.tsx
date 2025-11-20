@@ -1,0 +1,173 @@
+import { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { ArrowLeft, Shield, Heart, Building2, Layers, Crosshair } from 'lucide-react';
+import { starshipsApi } from '../services/starshipsApi';
+import { Starship } from '../types/starship';
+
+
+export default function DetailPage() {
+  const { id } = useParams<{ id: string }>();
+  const [starship, setStarship] = useState<Starship | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadStarship();
+  }, [id]);
+
+  const loadStarship = async () => {
+    if (id) {
+      setLoading(true);
+      const data = await starshipsApi.getStarshipById(id);
+      setStarship(data);
+      setLoading(false);
+    }
+  };
+
+  const getFactionColor = (faction: string | null) => {
+    switch (faction) {
+      case 'Rebel Alliance':
+        return 'from-red-600 to-orange-600';
+      case 'Galactic Empire':
+        return 'from-gray-700 to-gray-900';
+      case 'Galactic Republic':
+        return 'from-blue-600 to-cyan-600';
+      case 'CIS':
+        return 'from-blue-800 to-blue-950';
+      default:
+        return 'from-gray-600 to-gray-800';
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  if (!starship) {
+    return (
+      <div className="min-h-screen p-6">
+        <div className="max-w-7xl mx-auto text-center py-16">
+          <p className="text-gray-400 text-xl">Starship not found</p>
+          <Link to="/" className="text-blue-400 hover:text-blue-300 mt-4 inline-block">
+            Return to Home
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen p-6">
+      <div className="max-w-7xl mx-auto">
+        <Link to="/" className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors">
+          <ArrowLeft size={20} />
+          Back to Home
+        </Link>
+
+        {/* Hero Section */}
+        <div className="bg-gray-800 rounded-lg overflow-hidden mb-8">
+          <div className="grid md:grid-cols-2 gap-0">
+            {/* Image */}
+            <div className="relative h-96 md:h-auto">
+              <img
+                src={starship.image ?? ""}
+                alt={starship.name}
+                className="w-full h-full object-cover"
+              />
+              <div className={`absolute top-4 right-4 bg-gradient-to-br ${getFactionColor(starship.faction)} px-4 py-2 rounded-lg shadow-lg`}>
+                <span className="text-sm">{starship.faction}</span>
+              </div>
+            </div>
+
+            {/* Info */}
+            <div className="p-8">
+              <h1 className="text-4xl mb-4">{starship.name}</h1>
+              
+              <div className="space-y-4 mb-6">
+                <div className="flex items-center gap-3 text-gray-300">
+                  <Building2 className="text-blue-400" size={20} />
+                  <div>
+                    <p className="text-xs text-gray-500">Corporation</p>
+                    <p>{starship.corporation}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 text-gray-300">
+                  <Layers className="text-purple-400" size={20} />
+                  <div>
+                    <p className="text-xs text-gray-500">Ship Class</p>
+                    <p>{starship.shipClass}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                <div className="bg-gray-900 p-4 rounded-lg border-l-4 border-blue-500">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Shield className="text-blue-400" size={20} />
+                    <span className="text-sm text-gray-400">Shield Points</span>
+                  </div>
+                  <p className="text-3xl text-blue-400">{starship.shieldPoints ?? 0}</p>
+                </div>
+
+                <div className="bg-gray-900 p-4 rounded-lg border-l-4 border-red-500">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Heart className="text-red-400" size={20} />
+                    <span className="text-sm text-gray-400">Hull Points</span>
+                  </div>
+                  <p className="text-3xl text-red-400">{starship.hullPoints ?? 0}</p>
+                </div>
+              </div>
+
+              {/* Total Combat Power */}
+              <div className="bg-gradient-to-r from-yellow-900 to-orange-900 p-4 rounded-lg border border-yellow-700">
+                <p className="text-sm text-yellow-300 mb-1">Total Combat Power</p>
+                <p className="text-3xl text-yellow-400">{(starship.shieldPoints ?? 0) + (starship.hullPoints ?? 0)}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Description */}
+        <div className="bg-gray-800 rounded-lg p-8 mb-8">
+          <h2 className="text-2xl mb-4">Description</h2>
+          <p className="text-gray-300 leading-relaxed">{starship.description}</p>
+        </div>
+
+                {/* Armaments */}
+        <div className="bg-gray-800 rounded-lg p-8">
+          <div className="flex items-center gap-3 mb-6">
+            <Crosshair className="text-red-400" size={24} />
+            <h2 className="text-2xl">Armaments</h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            {(starship.armaments ?? '')
+              .split(',')
+              .filter(a => a.trim() !== '')
+              .map((arm, index) => (
+                <div
+                  key={index}
+                  className="bg-gray-900 p-4 rounded-lg border-l-4 border-red-500 hover:bg-gray-850 transition-colors"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="bg-red-900/30 p-2 rounded-lg mt-1">
+                      <Crosshair className="text-red-400" size={16} />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500 mb-1">Weapon #{index + 1}</p>
+                      <p className="text-gray-200">{arm.trim()}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
