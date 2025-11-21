@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Shield, Heart } from 'lucide-react';
-import { starshipsApi } from '../services/starshipsApi';
-import { Starship } from '../types/starship';
+import { starshipsApi } from '../../services/starshipsApi';
+import { Starship } from '../../types/starship';
 
 interface StarshipCardProps {
   starship: Starship;

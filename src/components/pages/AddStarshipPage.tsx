@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Plus, X, Upload, Trash2 } from 'lucide-react';
-import { starshipsApi } from '../services/starshipsApi';
+import { starshipsApi } from '../../services/starshipsApi';
 
 export default function AddStarshipPage() {
   const navigate = useNavigate();

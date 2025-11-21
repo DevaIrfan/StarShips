@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import { starshipsApi } from '../services/starshipsApi';
-import { Starship } from '../types/starship';
+import { starshipsApi } from '../../services/starshipsApi';
+import { Starship } from '../../types/starship';
 
 import StarshipCard from './StarshipCard';
-import { ImageWithFallback } from './figma/ImageWithFallback';
+import { ImageWithFallback } from '../fallback/ImageWithFallback';
 
 
 export default function FactionsPage() {

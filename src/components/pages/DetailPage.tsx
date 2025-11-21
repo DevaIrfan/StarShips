@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Shield, Heart, Building2, Layers, Crosshair } from 'lucide-react';
-import { starshipsApi } from '../services/starshipsApi';
-import { Starship } from '../types/starship';
+import { starshipsApi } from '../../services/starshipsApi';
+import { Starship } from '../../types/starship';
 
 
 export default function DetailPage() {
@@ -62,10 +62,18 @@ export default function DetailPage() {
   return (
     <div className="min-h-screen p-6">
       <div className="max-w-7xl mx-auto">
-        <Link to="/" className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors">
-          <ArrowLeft size={20} />
-          Back to Home
-        </Link>
+        <div className="flex justify-between items-center mb-6">
+          <Link to="/" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+            <ArrowLeft size={20} />
+              Back to Home
+            </Link>
+
+            <Link
+              to={`/edit/${starship.id}`}
+                className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-white transition-colors">
+                  Edit
+            </Link>
+          </div>
 
         {/* Hero Section */}
         <div className="bg-gray-800 rounded-lg overflow-hidden mb-8">

@@ -70,4 +70,23 @@ export const starshipsApi = {
 
     return data as Starship[];
   },
+
+    async updateStarship(
+    id: string,
+    updatedData: Partial<Omit<Starship, "id" | "created_at">>
+  ) {
+    const { data, error } = await supabase
+      .from("starships")
+      .update(updatedData)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error("Supabase Update Error:", error);
+      throw error;
+    }
+
+    return data as Starship;
+  }
 };
