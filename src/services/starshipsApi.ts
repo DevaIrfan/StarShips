@@ -88,5 +88,19 @@ export const starshipsApi = {
     }
 
     return data as Starship;
+  },
+
+    async deleteStarship(id: string) {
+    const { error } = await supabase
+      .from("starships")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      console.error("Supabase Delete Error:", error);
+      throw error;
+    }
+
+    return true;
   }
 };

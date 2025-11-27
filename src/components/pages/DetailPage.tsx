@@ -1,14 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Shield, Heart, Building2, Layers, Crosshair } from 'lucide-react';
 import { starshipsApi } from '../../services/starshipsApi';
 import { Starship } from '../../types/starship';
-
+import { useFavorites } from '../../hooks/useFavorites';
 
 export default function DetailPage() {
   const { id } = useParams<{ id: string }>();
   const [starship, setStarship] = useState<Starship | null>(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const { isFavorite, toggleFavorite } = useFavorites();
+
+
 
   useEffect(() => {
     loadStarship();
@@ -46,6 +51,20 @@ export default function DetailPage() {
     );
   }
 
+  const handleDelete = async () => {
+  if (!confirm(`Are you sure you want to delete ${starship?.name}?`)) return;
+
+  try {
+    await starshipsApi.deleteStarship(String(starship?.id));
+    alert("Starship deleted successfully!");
+    navigate("/");
+  } catch (error) {
+    console.error("Delete Error:", error);
+    alert("Failed to delete starship");
+  }
+};
+
+
   if (!starship) {
     return (
       <div className="min-h-screen p-6">
@@ -68,11 +87,20 @@ export default function DetailPage() {
               Back to Home
             </Link>
 
+            <div className="flex gap-3">
             <Link
               to={`/edit/${starship.id}`}
-                className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-white transition-colors">
-                  Edit
+              className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-white transition-colors">
+                Edit
             </Link>
+
+            <button
+              onClick={handleDelete}
+              className="bg-red-600 hover:bg-red-500 px-4 py-2 rounded-lg text-white transition-colors">
+                Delete
+            </button>
+          </div>
+
           </div>
 
         {/* Hero Section */}
@@ -80,15 +108,48 @@ export default function DetailPage() {
           <div className="grid md:grid-cols-2 gap-0">
             {/* Image */}
             <div className="relative h-96 md:h-auto">
-              <img
-                src={starship.image ?? ""}
-                alt={starship.name}
-                className="w-full h-full object-cover"
-              />
-              <div className={`absolute top-4 right-4 bg-gradient-to-br ${getFactionColor(starship.faction)} px-4 py-2 rounded-lg shadow-lg`}>
-                <span className="text-sm">{starship.faction}</span>
-              </div>
-            </div>
+          {/* Favorite button - LEFT SIDE */}
+          <button
+  onClick={(e) => {
+    e.stopPropagation();
+    toggleFavorite(starship.id.toString());
+  }}
+  className="absolute top-4 left-4 z-50 p-2 cursor-pointer"
+>
+  {isFavorite(starship.id.toString()) ? (
+    <Heart
+      size={35}
+      strokeWidth={2.5}
+      className="text-red-500 drop-shadow-md transition-transform duration-200 scale-110"
+      fill="red"
+    />
+  ) : (
+    <Heart
+      size={35}
+      strokeWidth={2.5}
+      className="text-white drop-shadow-md transition-transform duration-200"
+      fill="white"
+    />
+  )}
+</button>
+
+
+          {/* Faction badge - RIGHT SIDE */}
+          <div
+            className={`absolute top-4 right-4 bg-gradient-to-br ${getFactionColor(
+              starship.faction
+            )} px-4 py-2 rounded-lg shadow-lg`}
+          >
+            <span className="text-sm">{starship.faction}</span>
+          </div>
+
+          {/* Image */}
+          <img
+            src={starship.image ?? ""}
+            alt={starship.name}
+            className="w-full h-full object-cover pointer-events-none"
+          />
+        </div>
 
             {/* Info */}
             <div className="p-8">
