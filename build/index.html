@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="StarShips - A comprehensive encyclopedia of Star Wars starships" />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" type="image/svg" href="/logo.svg" />
+    <title>StarShips</title>
+    <script type="module" crossorigin src="/assets/index-pefR6xk2.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-Bx5-ymnw.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>n
+      // Register Service Worker for PWA
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('Service Worker registered:', registration);
+            })
+            .catch((error) => {
+              console.log('Service Worker registration failed:', error);
+            });
+        });
+      }
+    </script>
+  </body>
+</html>
