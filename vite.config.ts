@@ -184,6 +184,17 @@ export default defineConfig({
   build: {
     target: 'esnext',
     outDir: 'build',
+    sourcemap: true,
+    minify: false, // DISABLE MINIFY UNTUK DEBUG
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'ui-vendor': ['lucide-react'],
+          'supabase': ['@supabase/supabase-js'],
+        },
+      },
+    },
   },
   
   server: {
