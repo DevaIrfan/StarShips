@@ -1,26 +1,30 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { OfflineIndicator } from './components/OfflineIndicator';
 import HomePage from './components/pages/HomePage';
 import FactionsPage from './components/pages/FactionsPage';
-import AddStarshipPage from './components/pages/AddStarshipPage';
 import DetailPage from './components/pages/DetailPage';
+import AddStarshipPage from './components/pages/AddStarshipPage';
+import EditStarshipPage from './components/pages/EditStarshipPage';
 import AboutPage from './components/pages/AboutPage';
-import BottomNavBar from './components/pages/BottomNavBar';
-import EditStarshipPage from "./components/pages/EditStarshipPage";
 
-export default function App() {
+function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gray-950 text-white pb-20">
+      {/* Offline Indicator - akan muncul otomatis saat offline */}
+      <OfflineIndicator />
+      
+      <div className="min-h-screen bg-gray-950">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/factions" element={<FactionsPage />} />
+          <Route path="/starship/:id" element={<DetailPage />} />
           <Route path="/add" element={<AddStarshipPage />} />
-          <Route path="/detail/:id" element={<DetailPage />} />
-          <Route path="/about" element={<AboutPage />} />
           <Route path="/edit/:id" element={<EditStarshipPage />} />
+          <Route path="/about" element={<AboutPage />} />
         </Routes>
-        <BottomNavBar />
       </div>
     </Router>
   );
 }
+
+export default App;

@@ -1,13 +1,16 @@
 const CACHE_NAME = "starships-cache-v1";
 const ASSETS_TO_CACHE = [
-  "/", 
+  "/",
   "/index.html",
   "/manifest.json",
-  "/icon-192.png",
-  "/icon-512.png",
   
-  // Auto-cache semua CSS & JS hasil Vite
-  // (akan ditangkap otomatis lewat fetch event)
+  // TAMBAHKAN:
+  "/factions/rebel.svg",
+  "/factions/empire.svg", 
+  "/factions/first-order.svg",
+  "/factions/resistance.svg",
+  "/logo.svg",
+  // ... semua SVG factions yang dipakai
 ];
 
 // Install service worker = caching file statis

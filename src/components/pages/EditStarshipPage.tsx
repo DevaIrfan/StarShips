@@ -73,6 +73,8 @@ export default function EditStarshipPage() {
     try {
       await starshipsApi.updateStarship(id!, {
         ...formData,
+        shieldPoints: Number(formData.shieldPoints),
+        hullPoints: Number(formData.hullPoints),
         armaments: filteredArmaments.join(","),
       });
 
@@ -86,21 +88,23 @@ export default function EditStarshipPage() {
   };
 
   // Input change
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    const { name, value } = e.target;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const { name, value } = e.target;
 
-    setFormData((prev) => ({
+  if (name === "shieldPoints" || name === "hullPoints") {
+    // Izinkan value kosong
+    setFormData(prev => ({
       ...prev,
-      [name]:
-        name === "shieldPoints" || name === "hullPoints"
-          ? parseInt(value) || 0
-          : value,
+      [name]: value === "" ? "" : Number(value)
     }));
-  };
+  } else {
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  }
+};
+
 
   // Image upload
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {

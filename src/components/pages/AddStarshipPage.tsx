@@ -51,12 +51,21 @@ export default function AddStarshipPage() {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
+  const { name, value } = e.target;
+
+  if (name === "shieldPoints" || name === "hullPoints") {
     setFormData(prev => ({
       ...prev,
-      [name]: name === 'shieldPoints' || name === 'hullPoints' ? parseInt(value) || 0 : value
+      [name]: value === "" ? "" : Number(value)
     }));
-  };
+  } else {
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  }
+};
+
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

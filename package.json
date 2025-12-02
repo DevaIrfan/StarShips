@@ -58,10 +58,11 @@
             "@types/react-dom": "^19.2.3",
             "@vitejs/plugin-react-swc": "^3.10.2",
             "vite": "^6.4.1",
-            "vite-plugin-pwa": "^1.1.0"
+            "vite-plugin-pwa": "^1.2.0"
       },
       "scripts": {
             "dev": "vite",
+            "preview": "vite preview",
             "build": "vite build"
       }
 }
