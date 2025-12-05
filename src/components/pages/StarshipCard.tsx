@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { Shield, Heart } from 'lucide-react';
-import { starshipsApi } from '../../services/starshipsApi';
 import { Starship } from '../../types/starship';
 
 interface StarshipCardProps {
@@ -32,23 +31,27 @@ export default function StarshipCard({ starship }: StarshipCardProps) {
             alt={starship.name}
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
           />
-          <div className={`absolute top-0 right-0 bg-gradient-to-br ${getFactionColor(starship.faction ?? "")} px-3 py-1 text-xs rounded-bl-lg`}>
+          <div className={`absolute top-0 right-0 bg-gradient-to-br ${getFactionColor(starship.faction ?? "")} px-3 py-1 text-xs text-white font-medium rounded-bl-lg`}>
             {starship.faction}
           </div>
         </div>
         
         <div className="p-4">
-          <h3 className="mb-2">{starship.name}</h3>
-          <p className="text-sm text-gray-400 mb-3">{starship.shipClass}</p>
+          <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">
+            {starship.name}
+          </h3>
+          <p className="text-sm text-gray-300 mb-3 font-medium">
+            {starship.shipClass}
+          </p>
           
           <div className="flex items-center justify-between text-sm">
             <div className="flex items-center gap-1 text-blue-400">
               <Shield size={16} />
-              <span>{starship.shieldPoints}</span>
+              <span className="font-semibold">{starship.shieldPoints}</span>
             </div>
             <div className="flex items-center gap-1 text-red-400">
               <Heart size={16} />
-              <span>{starship.hullPoints}</span>
+              <span className="font-semibold">{starship.hullPoints}</span>
             </div>
           </div>
         </div>

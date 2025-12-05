@@ -3899,19 +3899,19 @@ function StarshipCard({ starship }) {
           className: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
         }
       ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `absolute top-0 right-0 bg-gradient-to-br ${getFactionColor(starship.faction ?? "")} px-3 py-1 text-xs rounded-bl-lg`, children: starship.faction })
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `absolute top-0 right-0 bg-gradient-to-br ${getFactionColor(starship.faction ?? "")} px-3 py-1 text-xs text-white font-medium rounded-bl-lg`, children: starship.faction })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-4", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "mb-2", children: starship.name }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400 mb-3", children: starship.shipClass }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors", children: starship.name }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-300 mb-3 font-medium", children: starship.shipClass }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between text-sm", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1 text-blue-400", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(Shield, { size: 16 }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: starship.shieldPoints })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-semibold", children: starship.shieldPoints })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1 text-red-400", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(Heart, { size: 16 }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: starship.hullPoints })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-semibold", children: starship.hullPoints })
         ] })
       ] })
     ] })
@@ -5187,23 +5187,19 @@ function App() {
   }, []);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(BrowserRouter, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(OfflineIndicator, {}),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-h-screen bg-gray-950 pb-16", children: [
-      " ",
-      /* @__PURE__ */ jsxRuntimeExports.jsxs(Routes, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/", element: /* @__PURE__ */ jsxRuntimeExports.jsx(HomePage, {}) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/factions", element: /* @__PURE__ */ jsxRuntimeExports.jsx(FactionsPage, {}) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/detail/:id", element: /* @__PURE__ */ jsxRuntimeExports.jsx(DetailPage, {}) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/add", element: /* @__PURE__ */ jsxRuntimeExports.jsx(AddStarshipPage, {}) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/edit/:id", element: /* @__PURE__ */ jsxRuntimeExports.jsx(EditStarshipPage, {}) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/about", element: /* @__PURE__ */ jsxRuntimeExports.jsx(AboutPage, {}) })
-      ] })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(BottomNavBar, {}),
-    " "
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "min-h-screen bg-gray-950", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Routes, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/", element: /* @__PURE__ */ jsxRuntimeExports.jsx(HomePage, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/factions", element: /* @__PURE__ */ jsxRuntimeExports.jsx(FactionsPage, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/detail/:id", element: /* @__PURE__ */ jsxRuntimeExports.jsx(DetailPage, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/add", element: /* @__PURE__ */ jsxRuntimeExports.jsx(AddStarshipPage, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/edit/:id", element: /* @__PURE__ */ jsxRuntimeExports.jsx(EditStarshipPage, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/about", element: /* @__PURE__ */ jsxRuntimeExports.jsx(AboutPage, {}) })
+    ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BottomNavBar, {})
   ] });
 }
 
 clientExports.createRoot(document.getElementById("root")).render(
   /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) })
 );
-//# sourceMappingURL=index-DIn1gj9r.js.map
+//# sourceMappingURL=index-DfEWZdi_.js.map

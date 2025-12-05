@@ -66,22 +66,26 @@ export default function HomePage() {
       <div className="max-w-7xl mx-auto mb-8">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
-            {/* Logo Template */}
+            {/* Logo */}
             <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
               <img
                 src="/logo.svg"   
                 alt="Starships Logo"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover rounded-lg"
               />
             </div>
             <div>
-              <h1 className="text-3xl mb-1">StarShips</h1>
-              <p className="text-gray-400">Big Ship Go Brrr...</p>
+              <h1 className="text-3xl font-bold text-white mb-1">
+                StarShips
+              </h1>
+              <p className="text-gray-400 text-sm">
+                Big Ship Go Brrr...
+              </p>
             </div>
           </div>
           <Link
             to="/add"
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors"
+            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg transition-colors shadow-lg hover:shadow-blue-500/50"
           >
             <Plus size={20} />
             <span>Add Ship</span>
@@ -96,7 +100,7 @@ export default function HomePage() {
             placeholder="Search starships by name, faction, corporation, or class..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
+            className="w-full pl-12 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 transition-all"
           />
         </div>
       </div>
@@ -104,15 +108,29 @@ export default function HomePage() {
       {/* Results */}
       <div className="max-w-7xl mx-auto">
         {loading ? (
-          <div className="flex justify-center items-center h-64">
+          <div className="flex flex-col justify-center items-center h-64 gap-4">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+            <p className="text-gray-400 font-medium">Loading starships...</p>
           </div>
         ) : currentStarships.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-gray-400 text-xl">No starships found</p>
+            <p className="text-gray-400 text-xl font-medium">
+              No starships found
+            </p>
+            <p className="text-gray-500 text-sm mt-2">
+              Try adjusting your search criteria
+            </p>
           </div>
         ) : (
           <>
+            {/* Results Count */}
+            <div className="mb-4">
+              <p className="text-gray-400 text-sm">
+                Showing <span className="text-white font-semibold">{startIndex + 1}-{Math.min(endIndex, filteredStarships.length)}</span> of{' '}
+                <span className="text-white font-semibold">{filteredStarships.length}</span> starships
+              </p>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
               {currentStarships.map((starship) => (
                 <StarshipCard key={starship.id} starship={starship} />
@@ -125,18 +143,18 @@ export default function HomePage() {
                 <button
                   onClick={goToPreviousPage}
                   disabled={currentPage === 1}
-                  className="flex items-center gap-2 px-4 py-2 bg-gray-800 rounded-lg hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white font-medium rounded-lg hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   <ChevronLeft size={20} />
                   Previous
                 </button>
-                <span className="text-gray-400">
+                <span className="text-white font-semibold bg-gray-800 px-4 py-2 rounded-lg">
                   Page {currentPage} of {totalPages}
                 </span>
                 <button
                   onClick={goToNextPage}
                   disabled={currentPage === totalPages}
-                  className="flex items-center gap-2 px-4 py-2 bg-gray-800 rounded-lg hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white font-medium rounded-lg hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   Next
                   <ChevronRight size={20} />
