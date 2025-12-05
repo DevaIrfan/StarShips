@@ -22,7 +22,6 @@ export default function AddStarshipPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Filter out empty armaments
     const filteredArmaments = formData.armaments.filter(a => a.trim() !== '');
     
     if (filteredArmaments.length === 0) {
@@ -51,39 +50,35 @@ export default function AddStarshipPage() {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-  const { name, value } = e.target;
+    const { name, value } = e.target;
 
-  if (name === "shieldPoints" || name === "hullPoints") {
-    setFormData(prev => ({
-      ...prev,
-      [name]: value === "" ? "" : Number(value)
-    }));
-  } else {
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  }
-};
-
+    if (name === "shieldPoints" || name === "hullPoints") {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value === "" ? "" : Number(value)
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
+  };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validate file type
     if (!file.type.startsWith('image/')) {
       alert('Please upload an image file');
       return;
     }
 
-    // Validate file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
       alert('Image size should be less than 5MB');
       return;
     }
 
-    // Read file and convert to base64
     const reader = new FileReader();
     reader.onloadend = () => {
       const base64String = reader.result as string;
@@ -122,38 +117,42 @@ export default function AddStarshipPage() {
   return (
     <div className="min-h-screen p-6">
       <div className="max-w-3xl mx-auto">
-        <Link to="/" className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors">
+        <Link to="/" className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-6 font-medium transition-colors">
           <ArrowLeft size={20} />
           Back to Home
         </Link>
 
         <div className="bg-gray-800 rounded-lg p-8">
-          <h1 className="text-3xl mb-6">Add New Starship</h1>
+          <h1 className="text-3xl font-bold text-white mb-6">Add New Starship</h1>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name */}
             <div>
-              <label className="block text-sm text-gray-400 mb-2">Starship Name *</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Starship Name <span className="text-red-400">*</span>
+              </label>
               <input
                 type="text"
                 name="name"
                 required
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500"
+                className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 transition-all"
                 placeholder="e.g., X-Wing Starfighter"
               />
             </div>
 
             {/* Faction */}
             <div>
-              <label className="block text-sm text-gray-400 mb-2">Faction *</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Faction <span className="text-red-400">*</span>
+              </label>
               <select
                 name="faction"
                 required
                 value={formData.faction}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500"
+                className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 transition-all"
               >
                 <option value="Rebel Alliance">Rebel Alliance</option>
                 <option value="Galactic Empire">Galactic Empire</option>
@@ -164,35 +163,41 @@ export default function AddStarshipPage() {
 
             {/* Corporation */}
             <div>
-              <label className="block text-sm text-gray-400 mb-2">Corporation *</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Corporation <span className="text-red-400">*</span>
+              </label>
               <input
                 type="text"
                 name="corporation"
                 required
                 value={formData.corporation}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500"
+                className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 transition-all"
                 placeholder="e.g., Incom Corporation"
               />
             </div>
 
             {/* Ship Class */}
             <div>
-              <label className="block text-sm text-gray-400 mb-2">Ship Class *</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Ship Class <span className="text-red-400">*</span>
+              </label>
               <input
                 type="text"
                 name="shipClass"
                 required
                 value={formData.shipClass}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500"
+                className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 transition-all"
                 placeholder="e.g., Starfighter, Capital Ship, Bomber"
               />
             </div>
 
             {/* Image Upload */}
             <div>
-              <label className="block text-sm text-gray-400 mb-2">Starship Image *</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Starship Image <span className="text-red-400">*</span>
+              </label>
               
               {!imagePreview ? (
                 <div className="relative">
@@ -205,15 +210,15 @@ export default function AddStarshipPage() {
                   />
                   <label
                     htmlFor="image-upload"
-                    className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-gray-700 rounded-lg cursor-pointer hover:border-blue-500 transition-colors bg-gray-900"
+                    className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-gray-700 rounded-lg cursor-pointer hover:border-blue-500 hover:bg-gray-850 transition-all bg-gray-900"
                   >
                     <Upload size={48} className="text-gray-500 mb-3" />
-                    <p className="text-gray-400 mb-1">Click to upload image</p>
+                    <p className="text-gray-300 font-medium mb-1">Click to upload image</p>
                     <p className="text-gray-500 text-sm">PNG, JPG, WEBP (Max 5MB)</p>
                   </label>
                 </div>
               ) : (
-                <div className="relative">
+                <div className="relative group">
                   <img
                     src={imagePreview}
                     alt="Preview"
@@ -222,7 +227,7 @@ export default function AddStarshipPage() {
                   <button
                     type="button"
                     onClick={removeImage}
-                    className="absolute top-3 right-3 p-2 bg-red-600 hover:bg-red-700 rounded-lg transition-colors"
+                    className="absolute top-3 right-3 p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors shadow-lg"
                   >
                     <Trash2 size={20} />
                   </button>
@@ -233,7 +238,9 @@ export default function AddStarshipPage() {
             {/* Shield & Hull Points */}
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm text-gray-400 mb-2">Shield Points *</label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Shield Points <span className="text-red-400">*</span>
+                </label>
                 <input
                   type="number"
                   name="shieldPoints"
@@ -241,11 +248,13 @@ export default function AddStarshipPage() {
                   min="0"
                   value={formData.shieldPoints}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500"
+                  className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 transition-all"
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-400 mb-2">Hull Points *</label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Hull Points <span className="text-red-400">*</span>
+                </label>
                 <input
                   type="number"
                   name="hullPoints"
@@ -253,14 +262,16 @@ export default function AddStarshipPage() {
                   min="0"
                   value={formData.hullPoints}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500"
+                  className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 transition-all"
                 />
               </div>
             </div>
 
             {/* Armaments */}
             <div>
-              <label className="block text-sm text-gray-400 mb-2">Armaments *</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Armaments <span className="text-red-400">*</span>
+              </label>
               <div className="space-y-2">
                 {formData.armaments.map((armament, index) => (
                   <div key={index} className="flex gap-2">
@@ -268,14 +279,14 @@ export default function AddStarshipPage() {
                       type="text"
                       value={armament}
                       onChange={(e) => updateArmament(index, e.target.value)}
-                      className="flex-1 px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500"
+                      className="flex-1 px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 transition-all"
                       placeholder="e.g., Laser Cannons"
                     />
                     {formData.armaments.length > 1 && (
                       <button
                         type="button"
                         onClick={() => removeArmament(index)}
-                        className="px-3 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition-colors"
+                        className="px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
                       >
                         <X size={20} />
                       </button>
@@ -285,7 +296,7 @@ export default function AddStarshipPage() {
                 <button
                   type="button"
                   onClick={addArmament}
-                  className="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors"
+                  className="flex items-center gap-2 text-blue-400 hover:text-blue-300 font-medium transition-colors"
                 >
                   <Plus size={16} />
                   Add Armament
@@ -295,14 +306,16 @@ export default function AddStarshipPage() {
 
             {/* Description */}
             <div>
-              <label className="block text-sm text-gray-400 mb-2">Description *</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Description <span className="text-red-400">*</span>
+              </label>
               <textarea
                 name="description"
                 required
                 value={formData.description}
                 onChange={handleChange}
                 rows={4}
-                className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 resize-none"
+                className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 resize-none transition-all"
                 placeholder="Enter a description of the starship..."
               />
             </div>
@@ -311,17 +324,17 @@ export default function AddStarshipPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-700 px-6 py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
+              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-semibold px-6 py-3 rounded-lg transition-colors shadow-lg hover:shadow-blue-500/50 flex items-center justify-center gap-2"
             >
               {loading ? (
                 <>
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                  Adding...
+                  <span>Adding...</span>
                 </>
               ) : (
                 <>
                   <Plus size={20} />
-                  Add Starship
+                  <span>Add Starship</span>
                 </>
               )}
             </button>
